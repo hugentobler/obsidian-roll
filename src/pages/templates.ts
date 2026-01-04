@@ -24,6 +24,7 @@ const DEFAULT_NOW_TEMPLATE_BODY = `
 
 const DEFAULT_NEXT_TEMPLATE_BODY = `
 - [ ] task coming up soon
+- [/] in-progress future task
 - [ ] another task coming up later
 `;
 
@@ -121,6 +122,7 @@ if (import.meta.vitest) {
 				const result = buildPageTemplate("next", "2024-12-18");
 				expect(result).toContain("started: 2024-12-18");
 				expect(result).toContain("- [ ] task coming up soon");
+				expect(result).toContain("- [/] in-progress future task");
 				expect(result).toContain("- [ ] another task coming up later");
 			});
 

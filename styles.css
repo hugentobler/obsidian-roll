@@ -4,7 +4,10 @@
 /* [ ] and [x] use Obsidian's default styling */
 
 /* [/] Incomplete/In Progress – diagonal split (accent color / transparent) */
-input[type="checkbox"][data-task="/"] {
+/* Support both: input[data-task] (editor) and li[data-task] > input (rendered) */
+input[type="checkbox"][data-task="/"],
+li[data-task="/"] > input[type="checkbox"],
+.task-list-item[data-task="/"] > input[type="checkbox"] {
 	background: linear-gradient(
 		135deg,
 		var(--interactive-accent) 0%,
@@ -18,7 +21,9 @@ input[type="checkbox"][data-task="/"] {
 
 /* Hover state for [/] checkbox - keep gradient but change color */
 @media (hover: hover) {
-	input[type="checkbox"][data-task="/"]:hover {
+	input[type="checkbox"][data-task="/"]:hover,
+	li[data-task="/"] > input[type="checkbox"]:hover,
+	.task-list-item[data-task="/"] > input[type="checkbox"]:hover {
 		background: linear-gradient(
 			135deg,
 			var(--checkbox-color-hover) 0%,
@@ -32,7 +37,9 @@ input[type="checkbox"][data-task="/"] {
 }
 
 /* Hide the default checkmark when [/] is checked */
-input[type="checkbox"][data-task="/"]:checked::after {
+input[type="checkbox"][data-task="/"]:checked::after,
+li[data-task="/"] > input[type="checkbox"]:checked::after,
+.task-list-item[data-task="/"] > input[type="checkbox"]:checked::after {
 	display: none;
 }
 

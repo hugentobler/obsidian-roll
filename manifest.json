@@ -1,7 +1,7 @@
 {
 	"id": "roll",
 	"name": "Roll",
-	"version": "1.0.0",
+	"version": "0.9.0",
 	"minAppVersion": "1.10.0",
 	"description": "One-page todo list. Three states. No due dates. Unfinished tasks roll forward.",
 	"author": "Christopher Hugentobler",

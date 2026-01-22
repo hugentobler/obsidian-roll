@@ -1,6 +1,6 @@
 {
 	"name": "obsidian-roll",
-	"version": "1.0.0",
+	"version": "0.9.0",
 	"description": "One-page todo list. Three states. No due dates. Unfinished tasks roll forward.",
 	"main": "main.js",
 	"scripts": {

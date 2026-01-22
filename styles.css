@@ -1,49 +1,42 @@
-/* Analog Todos - Custom Task Checkbox Styles */
-
-/* Only customize the [/] In Progress state */
-/* [ ] and [x] use Obsidian's default styling */
-
-/* [/] Incomplete/In Progress – diagonal split (accent color / transparent) */
-/* Support both: input[data-task] (editor) and li[data-task] > input (rendered) */
-input[type="checkbox"][data-task="/"],
-li[data-task="/"] > input[type="checkbox"],
-.task-list-item[data-task="/"] > input[type="checkbox"] {
-	background: linear-gradient(
+/* Roll plugin: tri-state checkbox styling (scope to Roll pages only). */
+/* Only customize the [/] state; [ ] and [x] use theme defaults. */
+.plugin-roll input[data-task="/"]:checked,
+.plugin-roll li[data-task="/"] > input:checked,
+.plugin-roll li[data-task="/"] > p > input:checked {
+	background-image: linear-gradient(
 		135deg,
 		var(--interactive-accent) 0%,
 		var(--interactive-accent) 49.9%,
 		transparent 50%,
 		transparent 100%
-	) !important;
-	background-color: transparent !important;
-	border: 1px solid var(--interactive-accent);
+	);
+	background-color: transparent;
 }
 
-/* Hover state for [/] checkbox - keep gradient but change color */
+/* Hover state for [/] checkbox - keep gradient, use hover color. */
 @media (hover: hover) {
-	input[type="checkbox"][data-task="/"]:hover,
-	li[data-task="/"] > input[type="checkbox"]:hover,
-	.task-list-item[data-task="/"] > input[type="checkbox"]:hover {
+	.plugin-roll input[data-task="/"]:hover,
+	.plugin-roll li[data-task="/"] > input:hover,
+	.plugin-roll li[data-task="/"] > p > input:hover {
 		background: linear-gradient(
 			135deg,
 			var(--checkbox-color-hover) 0%,
 			var(--checkbox-color-hover) 49.9%,
 			transparent 50%,
 			transparent 100%
-		) !important;
-		background-color: transparent !important;
-		border-color: var(--checkbox-color-hover);
+		);
+		background-color: transparent;
 	}
 }
 
-/* Hide the default checkmark when [/] is checked */
-input[type="checkbox"][data-task="/"]:checked::after,
-li[data-task="/"] > input[type="checkbox"]:checked::after,
-.task-list-item[data-task="/"] > input[type="checkbox"]:checked::after {
+/* Hide the default checkmark when [/] is checked. */
+.plugin-roll input[data-task="/"]:checked:after,
+.plugin-roll li[data-task="/"] > input:checked:after,
+.plugin-roll li[data-task="/"] > p > input:checked:after {
 	display: none;
 }
 
-/* Roll Next Code Block */
+/* Roll Next code block. */
 .roll-next-container {
 	cursor: pointer;
 	opacity: 0.66;

@@ -11,6 +11,7 @@ import {
 	type RollSettings,
 	registerSettings,
 } from "./src/settings";
+import { registerPageViewClass } from "./src/view-class";
 
 export default class RollPlugin extends Plugin {
 	settings: RollSettings;
@@ -27,6 +28,7 @@ export default class RollPlugin extends Plugin {
 		registerCommands(this);
 		registerMenus(this);
 		registerSettings(this);
+		registerPageViewClass(this);
 	}
 
 	onunload() {}

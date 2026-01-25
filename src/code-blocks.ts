@@ -1,4 +1,4 @@
-import { Component, MarkdownRenderer } from "obsidian";
+import { MarkdownRenderChild, MarkdownRenderer } from "obsidian";
 import type RollPlugin from "../main";
 import { filterIncompleteSections, parseSections } from "./utils/tasks";
 
@@ -9,7 +9,7 @@ export function registerCodeBlocks(plugin: RollPlugin): void {
 	plugin.registerMarkdownCodeBlockProcessor(
 		"roll-next",
 		async (_source, el, ctx) => {
-			await renderNextTasks(plugin, el, ctx.sourcePath);
+			await renderNextTasks(plugin, el, ctx);
 		},
 	);
 }
@@ -20,7 +20,7 @@ export function registerCodeBlocks(plugin: RollPlugin): void {
 async function renderNextTasks(
 	plugin: RollPlugin,
 	el: HTMLElement,
-	sourcePath: string,
+	ctx: import("obsidian").MarkdownPostProcessorContext,
 ): Promise<void> {
 	const nextFile = plugin.pageManager.getFile("next");
 	if (!nextFile) return;
@@ -35,7 +35,7 @@ async function renderNextTasks(
 	// Make the whole block clickable
 	el.addClass("roll-next-container");
 	el.addEventListener("click", () => {
-		plugin.app.workspace.getLeaf(false).openFile(nextFile.file);
+		void plugin.app.workspace.getLeaf(false).openFile(nextFile.file);
 	});
 
 	// Divider and heading
@@ -45,11 +45,13 @@ async function renderNextTasks(
 	// Task list - render each task as full Markdown
 	const taskContainer = el.createDiv({ cls: "roll-next-list" });
 	const taskMarkdown = tasks.map((t) => `- [${t.state}] ${t.text}`).join("\n");
+	const renderChild = new MarkdownRenderChild(taskContainer);
+	ctx.addChild(renderChild);
 	await MarkdownRenderer.render(
 		plugin.app,
 		taskMarkdown,
 		taskContainer,
-		sourcePath,
-		new Component(),
+		ctx.sourcePath,
+		renderChild,
 	);
 }

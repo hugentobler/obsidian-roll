@@ -29,12 +29,12 @@ class RollSettingTab extends PluginSettingTab {
 	display(): void {
 		const { containerEl } = this;
 		containerEl.empty();
-		containerEl.createEl("h2", { text: "Roll" });
+		new Setting(containerEl).setName("Roll").setHeading();
 
 		new Setting(containerEl)
 			.setName("Now page folder")
 			.setDesc(
-				"Folder for Now pages, relative to vault root. Default is the plugin name.",
+				"Folder for 'Now' pages, relative to vault root. Default is the plugin name.",
 			)
 			.addText((text) =>
 				text
@@ -49,7 +49,7 @@ class RollSettingTab extends PluginSettingTab {
 		new Setting(containerEl)
 			.setName("Archive folder name")
 			.setDesc(
-				"Subfolder for archived Now pages, relative to the Now page folder.",
+				"Subfolder for archived now pages, relative to the now page folder.",
 			)
 			.addText((text) =>
 				text

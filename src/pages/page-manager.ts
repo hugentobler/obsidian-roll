@@ -2,7 +2,7 @@
  * Page manager - handles lifecycle for all page types
  */
 
-import { type App, Notice, type TFile } from "obsidian";
+import { type App, Notice, TFile } from "obsidian";
 import type { RollSettings } from "../settings";
 import { getTodayDate } from "../utils/dates";
 import { formatArchivedFileName } from "../utils/filenames";
@@ -37,20 +37,13 @@ export class PageManager {
 	getFile(pageType: PageType): PageInfo | null {
 		const filePath = this.getFilePath(pageType);
 		const file = this.app.vault.getAbstractFileByPath(filePath);
-		if (
-			!(
-				file instanceof Object &&
-				"extension" in file &&
-				file.extension === "md"
-			)
-		) {
+		if (!(file instanceof TFile) || file.extension !== "md") {
 			return null;
 		}
-		const tFile = file as TFile;
-		const cache = this.app.metadataCache.getFileCache(tFile);
+		const cache = this.app.metadataCache.getFileCache(file);
 		const frontmatter = cache?.frontmatter;
 		return {
-			file: tFile,
+			file,
 			started: frontmatter?.started,
 			ended: frontmatter?.ended,
 		};
@@ -135,7 +128,10 @@ export class PageManager {
 			await this.app.fileManager.renameFile(tempFile, pagePath);
 
 			// Open the new page
-			const newFile = this.app.vault.getAbstractFileByPath(pagePath) as TFile;
+			const newFile = this.app.vault.getAbstractFileByPath(pagePath);
+			if (!(newFile instanceof TFile)) {
+				throw new Error(`Expected a file at ${pagePath}`);
+			}
 			const leaf = this.app.workspace.getLeaf(false);
 			await leaf.openFile(newFile);
 

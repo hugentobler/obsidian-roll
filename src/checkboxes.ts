@@ -117,7 +117,7 @@ function handleReadingModeClick(
 	const file = plugin.app.vault.getAbstractFileByPath(filePath);
 	if (!file || !("extension" in file)) return;
 
-	plugin.app.vault.process(file as import("obsidian").TFile, (content) => {
+	void plugin.app.vault.process(file as import("obsidian").TFile, (content) => {
 		const lines = content.split("\n");
 		let taskCount = 0;
 

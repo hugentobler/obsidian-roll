@@ -25,14 +25,14 @@ export function registerCommands(plugin: RollPlugin): void {
 
 	// Command to rollover the active page (works on Now or Next)
 	plugin.addCommand({
-		id: "rollover-page",
+		id: "archive-page",
 		name: "Rollover this page",
 		checkCallback: (checking: boolean) => {
 			const pageType = getActivePageType(plugin);
 			if (!pageType) return false;
 
 			if (!checking) {
-				plugin.rolloverPage(pageType);
+				void plugin.rolloverPage(pageType);
 			}
 			return true;
 		},
